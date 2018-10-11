@@ -1,8 +1,4 @@
 
-
-Write-Output "Elevating privileges for this process"
-do {} until (Elevate-Privileges SeTakeOwnershipPrivilege)
-
 Write-Output "Uninstalling default apps"
 $apps = @(
     # default Windows 10 apps
