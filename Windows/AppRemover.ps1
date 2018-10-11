@@ -40,14 +40,13 @@ $apps = @(
     # "Microsoft.ZuneMusic"
     # "Microsoft.ZuneVideo"
       
-    # Threshold 2 apps
     # "Microsoft.CommsPhone"
-    # "Microsoft.ConnectivityStore"
+    "Microsoft.ConnectivityStore"
     # "Microsoft.GetHelp"
     "Microsoft.Getstarted"
     # "Microsoft.Messaging"
     # "Microsoft.Office.Sway"
-    # "Microsoft.OneConnect"
+    "Microsoft.OneConnect"
     # "Microsoft.WindowsFeedbackHub"
 
     # non-Microsoft
