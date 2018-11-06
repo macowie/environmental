@@ -3,9 +3,11 @@
 git clone https://github.com/rbenv/rbenv.git ~/.rbenv
 echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
 echo 'eval "$(rbenv init -)"' >> ~/.bashrc
-source ~/.bashrc
-mkdir -p "$(rbenv root)"/plugins
-git clone https://github.com/znz/rbenv-plug.git "$(rbenv root)/plugins/rbenv-plug"
+alias rbenv="~/.rbenv/bin/rbenv"
+echo rbenv
+rbenv init
+mkdir -p ~/.rbenv/plugins
+git clone https://github.com/znz/rbenv-plug.git ~/.rbenv/plugins/rbenv-plug
 rbenv plug ruby-build
 rbenv plug rbenv-update
 rbenv plug bundle-exec
