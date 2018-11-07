@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash 
 
 sudo apt install -y postgresql postgresql-contrib libpq-dev
                     

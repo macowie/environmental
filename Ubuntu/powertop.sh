@@ -1,6 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash 
 
-# Installs Intel PowerTop and adds a service to autotune every boot
+# Installs Intel PowerTop and adds a systemd service to autotune every boot
+
 sudo apt install powertop
 
 cat << EOF | sudo tee /etc/systemd/system/powertop.service
