@@ -9,8 +9,10 @@ sudo apt install -y autoconf bison build-essential libssl-dev libyaml-dev \
                     libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev \
                     libgdbm5 libgdbm-dev libsqlite3-dev
 
+# Install chromedriver
 sudo apt install -y chromium-chromedriver
 ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver
+
 # Install multimedia libraries
 sudo apt install -y ffmpeg libvips imagemagick mupdf
 
