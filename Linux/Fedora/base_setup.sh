@@ -14,7 +14,7 @@ sudo dnf upgrade
 
 # Install basic dev tools
 sudo dnf groupinstall -y "Development Tools" "Development Libraries"
-sudo dnf install -y openssl-devel libyaml-devel libffi-devel libsq3-devel
+sudo dnf install -y openssl-devel libyaml-devel libffi-devel libsq3-devel gcc-c++
 
 # Install global menu helpers
 sudo dnf install -y libdbusmenu-gtk3 libdbusmenu-gtk2 libdbusmenu-jsonloader
