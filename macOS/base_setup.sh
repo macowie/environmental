@@ -33,7 +33,7 @@ brew cask install xquartz # Required by mupdf
 brew install vips imagemagick ffmpeg pandoc poppler mupdf
 
 # Cloud Services
-brew install heroku awscli
+brew install heroku/brew/heroku awscli
 
 # Miscellaneous CLI tools
 brew install git vim ripgrep stow htop
