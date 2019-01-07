@@ -12,5 +12,5 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
    sudo dnf install -y akmod-tp_smapi akmod-acpi_call kernel-devel   
 fi
 
-tlp start
-tlp-stat -s
+sudo tlp start
+sudo tlp-stat -s
