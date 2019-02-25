@@ -16,6 +16,8 @@ sudo apt install -y ffmpeg libvips imagemagick mupdf
 # sudo apt install -y mysql-server mysql-client libmysqlclient-dev
 
 if !is_wsl; then
+  sudo apt install -y inotify-tools
+
   # Install chromedriver
   sudo apt install -y chromium-chromedriver
   ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver
