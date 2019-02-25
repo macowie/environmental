@@ -1,15 +1,12 @@
-#!/usr/bin/env bash 
+#!/usr/bin/env bash
 
 # Installs Intel PowerTop and adds a systemd service to autotune every boot
 
-# (assumes one of dnf or apt)
-if hash dnf 2>/dev/null; then
-    CMD="dnf"
-else
-    CMD="apt"
-fi
+source ./utils/utils.sh
 
-sudo $CMD install -y powertop
+PM=$(get_package_manager)
+
+sudo $PM install -y powertop
 
 cat << EOF | sudo tee /etc/systemd/system/powertop.service
 [Unit]

@@ -6,7 +6,6 @@ FIRA="https://github.com/mozilla/Fira/archive/4.106.zip"
 
 FONTS_DIR="$HOME/.local/share/fonts"
 
-
 if [ ! -d $FONTS_DIR ]; then
   mkdir -p $FONTS_DIR
 fi
