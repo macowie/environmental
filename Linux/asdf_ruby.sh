@@ -13,3 +13,4 @@ append_if_not_present $HOME/.default-gems rdebug
 
 asdf install ruby $RUBY_VERSION
 asdf global ruby $RUBY_VERSION
+ASDF_RUBY_VERSION=$RUBY_VERSION gem update --system
