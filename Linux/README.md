@@ -1,4 +1,4 @@
-# Linux Setup
+# Environmental Linux Setup
 
 A not-so opinionated web dev environment. Now with Fedora and Ubuntu flavors.
 Ubuntu scripts (Should) work for both real installs and Windows Subsystem for
