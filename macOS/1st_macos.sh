@@ -7,26 +7,14 @@ xcode-select --install
 # Install Homebrew
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-# Editors
-brew cask install sublime-text visual-studio-code
+# Basic dependencies
+brew install autoconf coreutils gpg
 
-# Dev browsers
-brew cask install chromium homebrew/cask-versions/firefox-developer-edition
+# Domains for local rails apps
+brew install puma/puma/puma-dev
 
-# Work
-brew cask install 1password figma basecamp
-
-# Miscellaneous
-brew cask install keepingyouawake transmit
-
-# Ruby management
-brew install rbenv ruby-build puma/puma/puma-dev
-
-# Database  s
+# Databases
 brew install sqlite postgresql mysql
-
-# Node.js
-brew install nodejs yarn npm
 
 # Multimedia libraries
 brew cask install xquartz # Required by mupdf
@@ -40,4 +28,3 @@ brew install git vim ripgrep stow htop
 
 # Funsies
 brew install fortune figlet cowsay lolcat youtube-dl
-brew cask install iina
