@@ -2,7 +2,7 @@
 
 source ./utils/utils.sh
 
-ERLANG_VERSION="21.2"
+ERLANG_VERSION="21.3"
 ELIXIR_VERSION="1.8-otp-21"
 
 # Miscellaneous Prereqs

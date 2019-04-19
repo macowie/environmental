@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-RUST_VERSION="1.32.0"
+RUST_VERSION="1.34.0"
 
 asdf plugin-add rust
 
