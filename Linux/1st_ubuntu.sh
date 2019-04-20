@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source ./utils/utils.sh
+
 # Upgrade base packages
 sudo apt update
 sudo apt upgrade
@@ -17,7 +19,7 @@ sudo apt install -y ffmpeg libvips imagemagick mupdf
 # Uncomment for mysql.. if necessary
 # sudo apt install -y mysql-server mysql-client libmysqlclient-dev
 
-if !is_wsl; then
+if [ !is_wsl ]; then
   sudo apt install -y inotify-tools
 
   # Install chromedriver

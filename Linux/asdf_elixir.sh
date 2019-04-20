@@ -6,13 +6,13 @@ ERLANG_VERSION="21.3"
 ELIXIR_VERSION="1.8-otp-21"
 
 # Miscellaneous Prereqs
-if is_fedora; then
-  sudo dnf install -y wxGTK3-devel wxBase3 libiodbc unixODBC.x86_64
-     erlang-odbc.x86_64 libxslt fop
-elif is_ubuntuy; then
-  sudo apt install -y libwxgtk3.0-dev libgl1-mesa-dev libglu1-mesa-dev libpng3 \
-                      xsltproc fop
-elif is_mac; then
+if [ is_fedora ]; then
+  sudo dnf install -y wxGTK3-devel wxBase3 libiodbc unixODBC.x86_64 \
+     		      erlang-odbc.x86_64 libxslt fop
+elif [ is_ubuntuy ]; then
+  sudo apt install -y libwxgtk3.0-dev libgl1-mesa-dev libglu1-mesa-dev \
+		      libpng3 xsltproc fop
+elif [ is_mac ]; then
   brew install autoconf wxmac
 fi
 
