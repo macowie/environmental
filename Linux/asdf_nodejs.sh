@@ -8,3 +8,4 @@ bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
 asdf install nodejs $NODEJS_VERSION
 asdf global nodejs $NODEJS_VERSION
 npm install -g yarn
+npm install -g lsp-tsserver
