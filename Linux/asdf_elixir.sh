@@ -11,8 +11,8 @@ if [ is_fedora ]; then
      		      erlang-odbc.x86_64 libxslt fop
 elif [ is_ubuntuy ]; then
   sudo apt install -y libwxgtk3.0-dev libgl1-mesa-dev libglu1-mesa-dev \
-		      libpng3 xsltproc fop
 elif [ is_mac ]; then
+		      libpng-dev xsltproc fop
   brew install autoconf wxmac
 fi
 

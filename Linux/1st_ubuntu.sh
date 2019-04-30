@@ -10,8 +10,8 @@ sudo apt install -y fish
 
 # Install build essentials
 sudo apt install -y autoconf bison build-essential libssl-dev libyaml-dev \
-                    libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev \
-                    libgdbm5 libgdbm-dev libsqlite3-dev libssh-dev unixodbc-dev
+                    libreadline-dev zlib1g-dev libncurses-dev libffi-dev \
+                    libgdbm-dev libsqlite3-dev libssh-dev unixodbc-dev
 
 # Install multimedia libraries
 sudo apt install -y ffmpeg libvips imagemagick mupdf
