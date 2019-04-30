@@ -2,9 +2,9 @@
 
 source ./utils/utils.sh
 
-if [ is_fedora ]; then
+if is_fedora; then
   sudo dnf install -y postgresql postgresql-server postgresql-contrib libpq-devel
-elif [ is_ubuntuy ]; then
+elif is_ubuntuy; then
   sudo apt install -y postgresql postgresql-contrib libpq-dev
 fi
 
