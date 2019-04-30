@@ -2,7 +2,7 @@
 
 source ./utils/utils.sh
 
-# Sublime Text/Merge
+# Sublime Text & Merge
 if is_fedora; then
   sudo rpm -v --import https://download.sublimetext.com/sublimehq-rpm-pub.gpg
   sudo dnf config-manager --add-repo https://download.sublimetext.com/rpm/stable/x86_64/sublime-text.repo
