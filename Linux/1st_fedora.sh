@@ -18,7 +18,7 @@ sudo dnf install -y openssl-devel libyaml-devel libffi-devel libsq3-devel \
                     gcc-c++ inotify-tools
 
 # Install global menu helpers
-sudo dnf install -y libdbusmenu-gtk3 libdbusmenu-gtk2 libdbusmenu-jsonloader
+# sudo dnf install -y libdbusmenu-gtk3 libdbusmenu-gtk2 libdbusmenu-jsonloader
 
 # Install chromium & chromedriver for automated testing
 sudo dnf install -y chromium chromedriver
