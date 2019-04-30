@@ -37,6 +37,7 @@ flatpak install -y flathub \
   de.wolfvollprecht.UberWriter \
   org.signal.Signal \
   org.telegram.desktop \
+  com.slack.Slack \
   com.discordapp.Discord \
   org.gnome.Lollypop \
   io.github.Pithos \
