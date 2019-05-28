@@ -34,7 +34,7 @@ function is_mac {
 }
 
 function is_wsl {
-  grep -q Microsoft /proc/version &> /dev/null
+  grep -Ei 'Microsoft' /proc/version &> /dev/null
 }
 
 function is_ubuntuy {
