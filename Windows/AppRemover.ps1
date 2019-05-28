@@ -50,7 +50,7 @@ $apps = @(
     # "Microsoft.WindowsFeedbackHub"
 
     # non-Microsoft
-    "PandoraMediaInc.29680B314EFC2"
+    #"PandoraMediaInc.29680B314EFC2"
     "Flipboard.Flipboard"
     "ShazamEntertainmentLtd.Shazam"
     "king.com.CandyCrushSaga"
@@ -76,7 +76,7 @@ $apps = @(
     "D5EA27B7.Duolingo-LearnLanguagesforFree"
     "46928bounde.EclipseManager"
     "ActiproSoftwareLLC.562882FEEB491"
-    # "DolbyLaboratories.DolbyAccess"
+    "DolbyLaboratories.DolbyAccess"
     "A278AB0D.DisneyMagicKingdoms"
     "WinZipComputing.WinZipUniversal"
 )
