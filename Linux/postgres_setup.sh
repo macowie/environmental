@@ -9,7 +9,8 @@ elif is_ubuntuy; then
 fi
 
 sudo postgresql-setup --initdb
-sudo service postgresql start
+sudo systemctl start postgresql
+sudo systemctl enable postgresql
 
 # Create default postgresql user and database
 sudo -u postgres createuser $USER --superuser --login
