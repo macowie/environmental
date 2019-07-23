@@ -32,6 +32,7 @@ fi
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
 flatpak install -y flathub \
+  org.gnome.Evolution \
   org.libreoffice.LibreOffice \
   org.kde.okular \
   de.wolfvollprecht.UberWriter \
