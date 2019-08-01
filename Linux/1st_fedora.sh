@@ -25,3 +25,6 @@ sudo dnf install -y chromium chromedriver
 
 # Install multimedia libraries
 sudo dnf install -y ffmpeg vips ImageMagick mupdf
+
+# Misc utils
+sudo dnf install -y ripgrep neovim exa
