@@ -50,3 +50,9 @@ flatpak install -y flathub \
   org.zealdocs.Zeal \
   io.dbeaver.DBeaverCommunity \
   com.github.alecaddd.sequeler \
+  org.freecadweb.FreeCAD \
+  org.gnome.Chess \
+  org.gnome.Dictionary \
+  org.gnome.Todo \
+  org.gnome.FeedReader \
+  org.gnome.Notes
