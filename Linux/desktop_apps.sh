@@ -43,15 +43,17 @@ flatpak install -y flathub \
   org.gnome.Lollypop \
   io.github.Pithos \
   com.spotify.Client \
-  io.github.GnomeMpv \
+  io.github.celluloid_player.Celluloid \
   org.videolan.VLC \
-  com.transmissionbt.Transmission \
+  org.shotcut.Shotcut \
   org.audacityteam.Audacity \
   org.zealdocs.Zeal \
   io.dbeaver.DBeaverCommunity \
   com.github.alecaddd.sequeler \
   org.freecadweb.FreeCAD \
+  com.transmissionbt.Transmission \
   org.gnome.Chess \
+  org.gnome.Mines \
   org.gnome.Dictionary \
   org.gnome.Todo \
   org.gnome.FeedReader \
