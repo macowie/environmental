@@ -21,7 +21,7 @@ sudo dnf install -y openssl-devel libyaml-devel libffi-devel libsq3-devel \
 # sudo dnf install -y libdbusmenu-gtk3 libdbusmenu-gtk2 libdbusmenu-jsonloader
 
 # Install chromium & chromedriver for automated testing
-sudo dnf install -y chromium chromedriver
+sudo dnf install -y chromium chromedriver chromium-libs-media-freeworld
 
 # Install multimedia libraries
 sudo dnf install -y ffmpeg vips ImageMagick mupdf
