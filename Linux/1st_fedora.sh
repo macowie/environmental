@@ -11,16 +11,14 @@ sudo dnf install -y rpmfusion-free-release-tainted
 sudo dnf install -y libdvdcss
 
 # Upgrade base packages
-sudo dnf check-update
-sudo dnf upgrade
+sudo dnf upgrade --refresh -y
 
-# Install basic dev tools
+# Install basic dev tools + libs
 sudo dnf groupinstall -y "Development Tools" "Development Libraries"
 sudo dnf install -y openssl-devel libyaml-devel libffi-devel libsq3-devel \
-                    gcc-c++ inotify-tools
-
-# Install global menu helpers
-# sudo dnf install -y libdbusmenu-gtk3 libdbusmenu-gtk2 libdbusmenu-jsonloader
+                    gcc-c++ 
+sudo dnf install -y inotify-tools git git-credential-libsecret curl \
+				    ripgrep bat exa fd-find neovim
 
 # Install chromium & chromedriver for automated testing
 sudo dnf install -y chromium chromedriver chromium-libs-media-freeworld
@@ -28,5 +26,5 @@ sudo dnf install -y chromium chromedriver chromium-libs-media-freeworld
 # Install multimedia libraries
 sudo dnf install -y ffmpeg vips ImageMagick mupdf
 
-# <3 fast & rusty tools
-sudo dnf install -y ripgrep bat exa fd-find
+# Heroku CLI
+curl https://cli-assets.heroku.com/install.sh | sh
