@@ -18,7 +18,7 @@ sudo dnf groupinstall -y "Development Tools" "Development Libraries"
 sudo dnf install -y openssl-devel libyaml-devel libffi-devel libsq3-devel \
                     gcc-c++ 
 sudo dnf install -y inotify-tools git git-credential-libsecret curl \
-				    ripgrep bat exa fd-find neovim
+				    ripgrep bat exa fd-find neovim neofetch tilix
 
 # Install chromium & chromedriver for automated testing
 sudo dnf install -y chromium chromedriver chromium-libs-media-freeworld
