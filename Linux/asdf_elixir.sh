@@ -2,8 +2,8 @@
 
 source ./utils/utils.sh
 
-ERLANG_VERSION="21.3"
-ELIXIR_VERSION="1.8-otp-21"
+ERLANG_VERSION="22.3"
+ELIXIR_VERSION="1.10-otp-22"
 
 # Miscellaneous Prereqs
 if is_fedora; then
