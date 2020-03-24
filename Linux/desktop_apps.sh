@@ -28,12 +28,17 @@ elif is_ubuntuy; then
   sudo apt install -y code
 fi
 
+# Install PIM apps natively -- their flatpaks have issues taling to gnome-online-accounts
+if is_fedora; then
+  sudo dnf install -y evolution geary gnome-todo gnome-calendar gnome-contacts bijiben
+elif is_ubuntuy; then
+  sudo apt install -y evolution geary gnome-todo gnome-calendar gnome-contacts bijiben
+fi
+
 # Flatpak everything possible
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
 flatpak install -y flathub \
-  org.gnome.Evolution \
-  org.libreoffice.LibreOffice \
   de.wolfvollprecht.UberWriter \
   com.github.johnfactotum.Foliate
   org.signal.Signal \
