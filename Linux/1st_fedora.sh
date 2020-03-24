@@ -10,6 +10,10 @@ sudo dnf groupupdate -y sound-and-video
 sudo dnf install -y rpmfusion-free-release-tainted
 sudo dnf install -y libdvdcss
 
+# Install and enable codecs for Firefox
+sudo dnf config-manager --set-enabled fedora-cisco-openh264
+sudo dnf install gstreamer1-plugin-openh264 mozilla-openh264
+
 # Upgrade base packages
 sudo dnf upgrade --refresh -y
 
