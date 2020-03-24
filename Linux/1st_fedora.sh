@@ -18,7 +18,7 @@ sudo dnf groupinstall -y "Development Tools" "Development Libraries"
 sudo dnf install -y openssl-devel libyaml-devel libffi-devel libsq3-devel \
                     gcc-c++ 
 sudo dnf install -y inotify-tools git git-credential-libsecret curl \
-				    ripgrep bat exa fd-find neovim neofetch tilix \
+				    ripgrep bat exa fd-find neovim tilix \
 				    fuse-exfat exfat-utils
 
 # Install chromium & chromedriver for automated testing
@@ -26,6 +26,9 @@ sudo dnf install -y chromium chromedriver chromium-libs-media-freeworld
 
 # Install multimedia libraries
 sudo dnf install -y ffmpeg vips ImageMagick mupdf
+
+# Funsies
+sudo dnf install -y neofetch fortune-mod figlet cowsay lolcat youtube-dl
 
 # Heroku CLI
 curl https://cli-assets.heroku.com/install.sh | sh
