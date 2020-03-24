@@ -5,8 +5,10 @@ sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-r
 ## Enable AppStream metadata for GNOME Software/KDE Discover
 sudo dnf groupupdate -y core
 ## Update GStreamer, etc complementary components
-sudo dnf groupupdate -y multimedia
+sudo dnf groupupdate -y multimedia --setop="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin
 sudo dnf groupupdate -y sound-and-video
+sudo dnf install -y rpmfusion-free-release-tainted
+sudo dnf install -y libdvdcss
 
 # Upgrade base packages
 sudo dnf check-update
