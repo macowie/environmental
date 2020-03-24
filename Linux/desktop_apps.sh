@@ -40,26 +40,28 @@ flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flat
 
 flatpak install -y flathub \
   de.wolfvollprecht.UberWriter \
-  com.github.johnfactotum.Foliate
+  com.github.johnfactotum.Foliate \
   org.signal.Signal \
-  org.telegram.desktop \
   com.slack.Slack \
   com.discordapp.Discord \
   org.gnome.Lollypop \
+  de.haeckerfelix.Shortwave \
   io.github.Pithos \
   com.spotify.Client \
   io.github.celluloid_player.Celluloid \
   org.videolan.VLC \
   org.shotcut.Shotcut \
+  com.obsproject.Studio \
+  org.inkscape.Inkscape \
   org.audacityteam.Audacity \
+  org.glimpse_editor.Glimpse \
   org.zealdocs.Zeal \
   io.dbeaver.DBeaverCommunity \
   com.github.alecaddd.sequeler \
-  org.freecadweb.FreeCAD \
+  com.leinardi.gst \
   com.transmissionbt.Transmission \
   org.gnome.Chess \
   org.gnome.Mines \
   org.gnome.Dictionary \
-  org.gnome.Todo \
   org.gnome.FeedReader \
   org.gnome.Notes
