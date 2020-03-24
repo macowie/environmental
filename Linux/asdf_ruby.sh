@@ -2,7 +2,7 @@
 
 source ./utils/utils.sh
 
-RUBY_VERSION="2.6.2"
+RUBY_VERSION="2.6.5"
 
 asdf plugin-add ruby
 
