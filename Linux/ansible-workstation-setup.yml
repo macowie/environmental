@@ -1,0 +1,217 @@
+# ansible-galaxy collection install community.general
+# pip install psutil
+# ansible-playbook ansible-workstation-setup.yml -K
+
+# TODOS:
+# Fonts
+# Auto stowing dotfiles?
+# asdf
+# g++ [not included in development tools group]
+# heroku cli ### curl https://cli-assets.heroku.com/install.sh | sh
+# postgres init sudo postgresql-setup --initdb; sudo systemctl enable --now postgresql
+# sudo -u postgres createuser $USER --superuser --login
+# createdb $USER
+# gsettings: titlebar buttons, day name in topbar
+# gnome extensions
+
+
+- hosts: localhost
+  tasks:
+    - name: Add Negativo Multimedia repo
+      become: yes
+      yum_repository:
+        name: fedora-multimedia
+        description: Negativo17 Fedora Multimedia
+        enabled: yes
+        baseurl: https://negativo17.org/repos/multimedia/fedora-34/x86_64/
+        gpgkey: https://negativo17.org/repos/RPM-GPG-KEY-slaanesh
+
+
+    - name: Enable Night Light
+      dconf:
+        key: /org/gnome/settings-daemon/plugins/color/night-light-enabled
+        value: "true"
+    - name: Set Night Light Temperature
+      dconf:
+        key: /org/gnome/settings-daemon/plugins/color/night-light-temperature
+        value: uint32 5500
+
+    - name: Install the 'Development tools' package group
+      become: yes
+      dnf:
+        name: '@Development tools'
+        state: present
+
+    - name: Install miscellaneous tools
+      become: yes
+      package:
+        name:
+          - awscli
+          - exa
+          - fish
+          - fzf
+          - jq
+          - pandoc
+          - ripgrep
+          - rclone
+          - stow
+          - xclip
+        state: present
+
+    - name: Install Postgresql + tools
+      become: yes
+      package:
+        name:
+          - postgresql
+          - postgresql-server
+          - postgresql-contrib
+          - libpq-devel
+        state: present
+
+    - name: Install multimedia tools
+      become: yes
+      package:
+        name:
+          - libdvdcss
+          - gstreamer1-plugin-openh264
+          - mozilla-openh264
+          - ffmpeg
+          - mkvtoolnix
+          - youtube-dl
+        state: present
+
+    - name: Install fun stuff
+      become: yes
+      package:
+        name:
+          - neofetch
+          - fortune-mod
+          - figlet
+          - cowsay
+          - lolcat
+
+        state: present
+
+    - name: Install games stuff
+      become: yes
+      package:
+        name:
+          - lutris
+          - gamemode
+        state: present
+
+    - name: Add Sublime Tools repo
+      become: yes
+      yum_repository:
+        name: sublime
+        description: Sublime Repository
+        enabled: yes
+        baseurl: https://download.sublimetext.com/rpm/stable/x86_64
+        gpgkey: https://download.sublimetext.com/sublimehq-rpm-pub.gpg
+
+
+    - name: Install Sublime Tools
+      become: yes
+      package:
+        name:
+          - sublime-text
+          - sublime-merge
+        state: present
+
+    - name: Add VSCode repo
+      become: yes
+      yum_repository:
+        name: VSCode
+        description: Visual Studio Code Repository
+        enabled: yes
+        baseurl: https://packages.microsoft.com/yumrepos/vscode
+        gpgkey:  https://packages.microsoft.com/keys/microsoft.asc
+
+    - name: Install VSCode
+      become: yes
+      package:
+        state: present
+        name: code
+        
+
+    - name: Add 1Password repo
+      become: yes
+      yum_repository:
+        name: 1Password
+        description: 1Password Repository
+        enabled: yes
+        baseurl: https://downloads.1password.com/linux/rpm/stable/x86_64
+        gpgkey: https://downloads.1password.com/linux/keys/1password.asc
+        
+    - name: Install 1Password
+      become: yes
+      package:
+        state: present
+        name: 1password
+        
+    - name: Add the flathub flatpak repository remote to the user installation
+      community.general.flatpak_remote:
+        name: flathub
+        state: present
+        flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+        method: user
+
+    - name: Install flatpaks
+      community.general.flatpak:
+        state: present
+        method: user
+        name: "{{ item }}"
+      loop:
+        - com.discordapp.Discord
+        - com.github.alecaddd.sequeler
+        - com.github.Flacon
+        - com.github.gi_lom.dialect
+        - com.github.johnfactotum.Foliate
+        - com.github.maoschanz.drawing
+        - com.github.tchx84.Flatseal
+        - com.github.xournalpp.xournalpp
+        - com.gitlab.newsflash
+        - com.leinardi.gst
+        - com.makemkv.MakeMKV
+        - com.nextcloud.desktopclient.nextcloud
+        - com.obsproject.Studio
+        - com.rafaelmardojai.Blanket
+        - com.slack.Slack
+        - com.spotify.Client
+        - com.transmissionbt.Transmission
+        - de.haeckerfelix.Shortwave
+        - de.wolfvollprecht.UberWriter
+        - io.dbeaver.DBeaverCommunity
+        - io.github.celluloid_player.Celluloid
+        - io.github.Pithos
+        - org.audacityteam.Audacity
+        - org.bunkus.mkvtoolnix-gui
+        - org.freac.freac
+        - org.freedesktop.Piper
+        - org.gimp.GIMP
+        - org.gnome.Cheese
+        - org.gnome.Chess
+        - org.gnome.Dictionary
+        - org.gnome.Games
+        - org.gnome.Lollypop
+        - org.gnome.Mines
+        - org.gnome.Notes
+        - org.inkscape.Inkscape
+        - org.pitivi.Pitivi
+        - org.shotcut.Shotcut
+        - org.signal.Signal
+        - org.videolan.VLC
+        - org.videolan.VLC.Plugin.bdj
+        - org.videolan.VLC.Plugin.makemkv
+        - org.zealdocs.Zeal
+
+
+#    - name: Install favored theme
+#      community.general.flatpak:
+#        state: present
+#        method: user
+#        name: org.gtk.Gtk3theme.Arc-Dark
+#      package:
+#        state: present
+#        become: yes
+#        name: arc-theme
