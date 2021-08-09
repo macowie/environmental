@@ -1,0 +1,38 @@
+# TODO
+# ReplaySorcery would be nice to have
+
+- hosts: localhost
+  tasks:
+    - name: Add Negativo Steam repo
+      become: yes
+      yum_repository:
+        name: fedora-steam
+        description: Negativo17 Fedora Multimedia
+        enabled: yes
+        baseurl: https://negativo17.org/repos/steam/fedora-34/x86_64/
+        gpgkey: https://negativo17.org/repos/RPM-GPG-KEY-slaanesh
+
+    - name: Install nvidia driver
+      become: yes
+      package:
+        name:
+          - nvidia-driver
+        state: present
+
+    - name: Install steam
+      become: yes
+      package:
+        name:
+          - steam
+          - kernel-modules-extra
+        state: present
+
+    - name: Install misc utilities
+      become: yes
+      package:
+        name:
+          - lutris
+          - gamemode
+          - mangohud
+          - goverlay
+        state: present

@@ -6,14 +6,8 @@
 # Fonts
 # Auto stowing dotfiles?
 # asdf
-# g++ [not included in development tools group]
-# heroku cli ### curl https://cli-assets.heroku.com/install.sh | sh
-# postgres init sudo postgresql-setup --initdb; sudo systemctl enable --now postgresql
-# sudo -u postgres createuser $USER --superuser --login
-# createdb $USER
 # gsettings: titlebar buttons, day name in topbar
 # gnome extensions
-
 
 - hosts: localhost
   tasks:
@@ -26,7 +20,6 @@
         baseurl: https://negativo17.org/repos/multimedia/fedora-34/x86_64/
         gpgkey: https://negativo17.org/repos/RPM-GPG-KEY-slaanesh
 
-
     - name: Enable Night Light
       dconf:
         key: /org/gnome/settings-daemon/plugins/color/night-light-enabled
@@ -36,10 +29,13 @@
         key: /org/gnome/settings-daemon/plugins/color/night-light-temperature
         value: uint32 5500
 
-    - name: Install the 'Development tools' package group
+    - name: Install baseline development packages
       become: yes
       dnf:
-        name: '@Development tools'
+        name:
+         - '@Development tools'
+         - 'g++'
+         - 'git'
         state: present
 
     - name: Install miscellaneous tools
@@ -55,8 +51,13 @@
           - ripgrep
           - rclone
           - stow
+          - curl
           - xclip
         state: present
+
+    - name: Install heroku-cli
+      ansible.builtin.command:
+        cmd: "curl https://cli-assets.heroku.com/install.sh | sh"
 
     - name: Install Postgresql + tools
       become: yes
@@ -67,6 +68,13 @@
           - postgresql-contrib
           - libpq-devel
         state: present
+    - name: Enable postgresql background service"
+      ansible.builtin.command:
+        cmd:
+          - postgres init sudo postgresql-setup --initdb
+          - sudo systemctl enable --now postgresql
+          - sudo -u postgres createuser $USER --superuser --login
+          - createdb $USER
 
     - name: Install multimedia tools
       become: yes
@@ -90,14 +98,6 @@
           - cowsay
           - lolcat
 
-        state: present
-
-    - name: Install games stuff
-      become: yes
-      package:
-        name:
-          - lutris
-          - gamemode
         state: present
 
     - name: Add Sublime Tools repo
