@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-NODEJS_VERSION="12.16.1"
+NODEJS_VERSION="14.17.1"
 
 asdf plugin-add nodejs
 
