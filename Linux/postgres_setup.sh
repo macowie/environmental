@@ -10,7 +10,7 @@ fi
 
 sudo postgresql-setup --initdb
 sudo systemctl start postgresql
-sudo systemctl enable postgresql
+sudo systemctl enable --now postgresql
 
 # Create default postgresql user and database
 sudo -u postgres createuser $USER --superuser --login
