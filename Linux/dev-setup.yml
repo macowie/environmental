@@ -181,7 +181,7 @@
         - com.spotify.Client
         - com.transmissionbt.Transmission
         - de.haeckerfelix.Shortwave
-        - de.wolfvollprecht.UberWriter
+        - org.gnome.gitlab.somas.Apostrophe
         - io.dbeaver.DBeaverCommunity
         - io.github.celluloid_player.Celluloid
         - io.github.Pithos
