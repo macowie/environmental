@@ -193,6 +193,7 @@
         - org.gnome.Cheese
         - org.gnome.Chess
         - org.gnome.Dictionary
+        - org.gnome.Extensions
         - org.gnome.Games
         - org.gnome.Lollypop
         - org.gnome.Mines
