@@ -17,6 +17,7 @@
       package:
         name:
           - nvidia-driver
+          - nvidia-settings
         state: present
 
     - name: Install steam
