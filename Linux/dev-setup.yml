@@ -56,9 +56,9 @@
           - gnome-tweaks
         state: present
 
-    - name: Install heroku-cli
-      ansible.builtin.command:
-        cmd: "curl https://cli-assets.heroku.com/install.sh | sh"
+#    - name: Install heroku-cli
+#      ansible.builtin.command:
+#        cmd: "curl https://cli-assets.heroku.com/install.sh | sh"
 
     - name: Install Postgresql + tools
       become: yes
@@ -69,13 +69,13 @@
           - postgresql-contrib
           - libpq-devel
         state: present
-    - name: Enable postgresql background service"
-      ansible.builtin.command:
-        cmd:
-          - postgres init sudo postgresql-setup --initdb
-          - sudo systemctl enable --now postgresql
-          - sudo -u postgres createuser $USER --superuser --login
-          - createdb $USER
+#    - name: Enable postgresql background service"
+#      ansible.builtin.command:
+#        cmd:
+#          - postgres init sudo postgresql-setup --initdb
+#          - sudo systemctl enable --now postgresql
+#          - sudo -u postgres createuser $USER --superuser --login
+#          - createdb $USER
 
     - name: Install multimedia tools
       become: yes
