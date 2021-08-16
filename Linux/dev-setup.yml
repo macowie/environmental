@@ -89,6 +89,7 @@
           - ffmpeg
           - mkvtoolnix
           - youtube-dl
+          - gthumb
         state: present
 
     - name: Install fun stuff
