@@ -34,8 +34,9 @@
       dnf:
         name:
          - '@Development tools'
-         - 'g++'
-         - 'git'
+         - g++
+         - git
+         - readline-devel
         state: present
 
     - name: Install miscellaneous tools
