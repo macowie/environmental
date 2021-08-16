@@ -84,6 +84,7 @@
         name:
           - libdvdcss
           - gstreamer1-plugin-openh264
+          - gstreamer1-libav
           - mozilla-openh264
           - ffmpeg
           - mkvtoolnix
