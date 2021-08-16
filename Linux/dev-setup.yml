@@ -37,6 +37,7 @@
          - g++
          - git
          - readline-devel
+         - libxml2-devel
         state: present
 
     - name: Install miscellaneous tools
