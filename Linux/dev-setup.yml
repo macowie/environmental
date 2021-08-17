@@ -70,6 +70,7 @@
           - postgresql-server
           - postgresql-contrib
           - libpq-devel
+          - pspg
         state: present
 #    - name: Enable postgresql background service"
 #      ansible.builtin.command:
