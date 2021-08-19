@@ -207,6 +207,7 @@
         - org.pitivi.Pitivi
         - org.shotcut.Shotcut
         - org.signal.Signal
+        - fr.handbrake.ghb
         - org.videolan.VLC
         - org.videolan.VLC.Plugin.bdj
         - org.videolan.VLC.Plugin.makemkv
