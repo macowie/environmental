@@ -38,6 +38,7 @@
          - git
          - readline-devel
          - libxml2-devel
+         - libcurl
         state: present
 
     - name: Install miscellaneous tools
