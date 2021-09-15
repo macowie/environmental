@@ -39,6 +39,7 @@
          - readline-devel
          - libxml2-devel
          - libcurl
+         - sqlite-devel
         state: present
 
     - name: Install miscellaneous tools
