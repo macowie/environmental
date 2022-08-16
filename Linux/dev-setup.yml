@@ -1,68 +1,176 @@
+# Maddie's Machinations
+# Messy and WIP Ansible Playbook for my desktops/laptops
+
+# Prereqs:
 # ansible-galaxy collection install community.general
 # pip install psutil
+
+# Usage:
 # ansible-playbook dev-setup.yml -K
 
-# TODOS:
-# Fonts
-# Auto stowing dotfiles?
+# TODOS (by priority):
+# Install Fonts (Hack Nerd Font, Fira Code, IBM Plex)
 # asdf
-# gsettings: titlebar buttons, day name in topbar
-# gnome extensions
+# GNOME Extensions
+# NAS Mounts
+# Credentials/SSH keys?
+# dconf/gsettings: titlebar buttons, day name in topbar
+# Split things into Roles (Nvidia, Gaming, Dev, AV editing)
+# Laptop power mgmt -- tlp/powertop, still needed?
+# Silverblue compatibility
+# -- Can this help spinning up Toolbxes
+
 
 - hosts: localhost
+  vars:
+    pkgs:
+      rpm:
+        base:
+        - awscli
+        - exa
+        - fish
+        - fzf
+        - jq
+        - pandoc
+        - ripgrep
+        - rclone
+        - realcrypt
+        - stow
+        - curl
+        - xclip
+        - gnome-tweaks
+        - ffmpeg
+        - gstreamer1-plugin-openh264
+        - gstreamer1-libav
+        - libdvdcss
+        - mozilla-openh264
+        - mkvtoolnix
+        - gthumb
+
+        dev:
+        - '@Development tools'
+        - g++
+        - git
+        - git-credential-libsecret
+        - readline-devel
+        - libxml2-devel
+        - libcurl
+        - sqlite-devel
+
+        fun:
+        - neofetch
+        - fortune-mod
+        - figlet
+        - cowsay
+        - lolcat
+
+      flatpak:
+        base:
+        - com.discordapp.Discord
+        - com.slack.Slack
+        - us.zoom.Zoom
+        - org.gnome.Fractal
+        - org.signal.Signal
+
+        - com.github.gi_lom.dialect
+        - com.github.johnfactotum.Foliate
+        - com.gitlab.newsflash
+        - com.rafaelmardojai.Blanket
+        - org.gnome.SoundRecorder
+        - org.deluge_torrent.deluge
+        - org.gnome.Cheese
+        - org.gimp.GIMP
+        - com.github.maoschanz.drawing
+        - com.belmoussaoui.Obfuscate
+
+        - org.gnome.Dictionary
+        - md.obsidian.Obsidian
+        - org.gnome.GTG
+        - org.gnome.Solanum
+        - io.posidon.Paper 
+        - org.gnome.gitlab.somas.Apostrophe
+        
+        - org.gnome.Lollypop
+        - de.haeckerfelix.Shortwave
+        - com.github.rafostar.Clapper
+        - io.bassi.Amberol
+        - io.github.Pithos
+        - com.github.iwalton3.jellyfin-media-player
+        - org.videolan.VLC
+        - com.spotify.Client
+        - org.mpdevil.mpdevil
+
+        - com.github.tchx84.Flatseal
+        - com.leinardi.gst
+        - com.mattjakeman.ExtensionManager
+        - com.github.qarmin.czkawka
+        - org.gnome.DejaDup
+        - org.gnome.NetworkDisplays
+        - re.sonny.Junction
+
+        multimedia:
+        - com.github.wwmm.easyeffects
+        - com.makemkv.MakeMKV
+        - org.videolan.VLC.Plugin.bdj
+        - org.videolan.VLC.Plugin.makemkv
+        - org.pitivi.Pitivi
+        - org.bunkus.mkvtoolnix-gui
+        - org.freac.freac
+        - org.audacityteam.Audacity
+        - com.github.Flacon
+        - fr.handbrake.ghb
+        - org.inkscape.Inkscape
+        - org.darktable.Darktable    
+        - org.gimp.GIMP
+        - org.gimp.GIMP.Plugin.Lensfun
+        - org.gimp.GIMP.Plugin.LiquidRescale 
+        - org.gimp.GIMP.Plugin.Resynthesizer 
+
+        dev:
+        - org.zealdocs.Zeal
+        - io.dbeaver.DBeaverCommunity
+        - ar.xjuan.Cambalache 
+
+        fun:
+        - org.gnome.Chess
+        - org.gnome.Mines
+        - org.gnome.Tetravex 
+        # - org.freedesktop.Piper
+
+    releasever: "{{ ansible_facts.distribution_major_version }}"
+
   tasks:
-    - name: Add Negativo Multimedia repo
-      become: yes
-      yum_repository:
-        name: fedora-multimedia
-        description: Negativo17 Fedora Multimedia
-        enabled: yes
-        baseurl: https://negativo17.org/repos/multimedia/fedora-34/x86_64/
-        gpgkey: https://negativo17.org/repos/RPM-GPG-KEY-slaanesh
+    # Install packages
 
-    - name: Enable Night Light
-      dconf:
-        key: /org/gnome/settings-daemon/plugins/color/night-light-enabled
-        value: "true"
-    - name: Set Night Light Temperature
-      dconf:
-        key: /org/gnome/settings-daemon/plugins/color/night-light-temperature
-        value: uint32 5500
-
-    - name: Install baseline development packages
-      become: yes
-      dnf:
-        name:
-         - '@Development tools'
-         - g++
-         - git
-         - readline-devel
-         - libxml2-devel
-         - libcurl
-         - sqlite-devel
-        state: present
-
-    - name: Install miscellaneous tools
+    - name: Enable RPMFusion
       become: yes
       package:
         name:
-          - awscli
-          - exa
-          - fish
-          - fzf
-          - jq
-          - pandoc
-          - ripgrep
-          - rclone
-          - stow
-          - curl
-          - xclip
-          - gnome-tweaks
+        - https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ releasever }}.noarch.rpm
+        - https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ releasever }}.noarch.rpm
+        - rpmfusion-free-release-tainted
+
+    - name: Install baseline desktop packages
+      become: yes
+      package:
+        name: "{{ pkgs.rpm.base }}"
         state: present
 
-#    - name: Install heroku-cli
-#      ansible.builtin.command:
-#        cmd: "curl https://cli-assets.heroku.com/install.sh | sh"
+    - name: Install baseline development packages
+      become: yes
+      package:
+        name: "{{ pkgs.rpm.dev }}"
+        state: present
+
+    - name: Install fun stuff
+      become: yes
+      package:
+        name: "{{ pkgs.rpm.fun }}"
+        state: present
+
+    - name: Install heroku-cli
+      become: yes
+      ansible.builtin.shell: curl https://cli-assets.heroku.com/install.sh | sh
 
     - name: Install Postgresql + tools
       become: yes
@@ -74,39 +182,14 @@
           - libpq-devel
           - pspg
         state: present
-#    - name: Enable postgresql background service"
-#      ansible.builtin.command:
-#        cmd:
-#          - postgres init sudo postgresql-setup --initdb
-#          - sudo systemctl enable --now postgresql
-#          - sudo -u postgres createuser $USER --superuser --login
-#          - createdb $USER
-
-    - name: Install multimedia tools
+    - name: Enable postgresql background service
       become: yes
-      package:
-        name:
-          - libdvdcss
-          - gstreamer1-plugin-openh264
-          - gstreamer1-libav
-          - mozilla-openh264
-          - ffmpeg
-          - mkvtoolnix
-          - youtube-dl
-          - gthumb
-        state: present
-
-    - name: Install fun stuff
-      become: yes
-      package:
-        name:
-          - neofetch
-          - fortune-mod
-          - figlet
-          - cowsay
-          - lolcat
-
-        state: present
+      ansible.builtin.command: "{{ item }}"
+      loop:
+        - sudo postgresql-setup --initdb
+        - sudo systemctl enable --now postgresql
+        - sudo -u postgres createuser $USER --superuser --login
+        - createdb $USER
 
     - name: Add Sublime Tools repo
       become: yes
@@ -140,7 +223,6 @@
       package:
         state: present
         name: code
-        
 
     - name: Add 1Password repo
       become: yes
@@ -156,6 +238,8 @@
       package:
         state: present
         name: 1password
+
+    # Flatpaks
         
     - name: Add the flathub flatpak repository remote to the user installation
       community.general.flatpak_remote:
@@ -164,64 +248,107 @@
         flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
         method: user
 
-    - name: Install flatpaks
+    - name: Install flatpaks - basic
       community.general.flatpak:
         state: present
-        method: user
+        name: "{{ item }}"
+      loop: "{{ pkgs.flatpak.base }}" 
+
+    - name: Install flatpaks - dev
+      community.general.flatpak:
+        state: present
+        name: "{{ item }}"
+      loop: "{{ pkgs.flatpak.dev }}" 
+
+    - name: Install flatpaks - multimedia
+      community.general.flatpak:
+        state: present
+        name: "{{ item }}"
+      loop: "{{ pkgs.flatpak.multimedia }}" 
+
+    - name: Install flatpaks - fun
+      community.general.flatpak:
+        state: present
+        name: "{{ item }}"
+      loop: "{{ pkgs.flatpak.fun }}" 
+
+    - name: Install flatpaks - utils
+      community.general.flatpak:
+        state: present
+        name: "{{ item }}"
+      loop: "{{ pkgs.flatpak.utils }}" 
+
+    # Theme
+
+    - name: Enable adw-gtk3 copr
+      community.general.copr:
+        state: present
+        name: 'nickavem/adw-gtk3'
+
+    - name: Install adw-gtk3 (flatpak)
+      community.general.flatpak:
+        state: present
         name: "{{ item }}"
       loop:
-        - com.discordapp.Discord
-        - com.github.alecaddd.sequeler
-        - com.github.Flacon
-        - com.github.gi_lom.dialect
-        - com.github.johnfactotum.Foliate
-        - com.github.maoschanz.drawing
-        - com.github.tchx84.Flatseal
-        - com.github.xournalpp.xournalpp
-        - com.gitlab.newsflash
-        - com.leinardi.gst
-        - com.makemkv.MakeMKV
-        - com.nextcloud.desktopclient.nextcloud
-        - com.obsproject.Studio
-        - com.rafaelmardojai.Blanket
-        - com.slack.Slack
-        - com.spotify.Client
-        - com.transmissionbt.Transmission
-        - de.haeckerfelix.Shortwave
-        - org.gnome.gitlab.somas.Apostrophe
-        - io.dbeaver.DBeaverCommunity
-        - io.github.celluloid_player.Celluloid
-        - io.github.Pithos
-        - org.audacityteam.Audacity
-        - org.bunkus.mkvtoolnix-gui
-        - org.freac.freac
-        - org.freedesktop.Piper
-        - org.gimp.GIMP
-        - org.gnome.Cheese
-        - org.gnome.Chess
-        - org.gnome.Dictionary
-        - org.gnome.Extensions
-        - org.gnome.Games
-        - org.gnome.Lollypop
-        - org.gnome.Mines
-        - org.gnome.Notes
-        - org.inkscape.Inkscape
-        - org.pitivi.Pitivi
-        - org.shotcut.Shotcut
-        - org.signal.Signal
-        - fr.handbrake.ghb
-        - org.videolan.VLC
-        - org.videolan.VLC.Plugin.bdj
-        - org.videolan.VLC.Plugin.makemkv
-        - org.zealdocs.Zeal
+      - org.gtk.Gtk3theme.adw-gtk3 
+      - org.gtk.Gtk3theme.adw-gtk3-dark
 
+    - name: Install adw-gtk3 (native)
+      package:
+        state: present
+        become: yes
+        name: adw-gtk3
+  
+    - name: Set GTK theme
+      dconf: key="/org/gnome/desktop/interface/gtk-theme" value="'Adwaita'"
 
-#    - name: Install favored theme
-#      community.general.flatpak:
-#        state: present
-#        method: user
-#        name: org.gtk.Gtk3theme.Arc-Dark
-#      package:
-#        state: present
-#        become: yes
-#        name: arc-theme
+    # Prefs
+
+    - name: Enable Night Light
+      dconf:
+        key: /org/gnome/settings-daemon/plugins/color/night-light-enabled
+        value: "true"
+    - name: Set Night Light Temperature
+      dconf:
+        key: /org/gnome/settings-daemon/plugins/color/night-light-temperature
+        value: uint32 5500
+
+    # Dotfiles
+
+    - name: Clone/update dotfiles repo
+      ansible.builtin.git:
+        repo: https://github.com/macowie/dotfiles.git
+        dest: "{{ ansible_env.HOME }}/dotfiles"
+        single_branch: yes
+        version: master
+
+    - name: Stow the stows
+      ansible.builtin.shell: "stow --target {{ ansible_env.HOME }} --verbose=2 {{ ansible_env.HOME }}/dotfiles/{{ item }}"
+      register: result
+      changed_when: 'result.stderr is search("LINK: ")'
+      loop:
+      - asdf
+      - bash
+      - fish
+      - git
+      - lvim
+      - nvim
+      - psql
+      - sublime-text
+      - tmux
+      - vim
+
+    # asdf
+    - name: Download asdf
+    ansible.builtin.git:
+      repo: https://github.com/asdf-vm/asdf.git
+      dest: "{{ ansible_env.HOME }}/.asdf"
+      single_branch: yes
+      version: v0.10.2
+    
+    - name: Add asdf plugins
+    ansible.builtin.shell: "asdf plugin add  {{ item.name }} {{ item.url }}"
+    loop:
+    - { name: nodejs, url: https://github.com/asdf-vm/asdf-nodejs.git }
+    - { name: ruby, url: https://github.com/asdf-vm/asdf-ruby.git }
+    - { name: rust, url: https://github.com/asdf-vm/asdf-rust.git }

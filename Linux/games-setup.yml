@@ -1,39 +1,89 @@
-# TODO
+# Maddie's Machinations
+# Messy and WIP Ansible Playbook for my desktops/laptops
+
+# Prereqs:
+# ansible-galaxy collection install community.general
+# pip install psutil
+
+# Usage:
+# ansible-playbook dev-setup.yml -K
+
+# TODOS (by priority):
+# Add xone https://github.com/medusalix/xone
+# Add NAS Games mount?
+# Autoskip nvidia
 # ReplaySorcery would be nice to have
 
 - hosts: localhost
+  vars_prompt:
+    - name: enable_nvidia
+      prompt: Install nvidia driver (y/n)?
+      private: no
   tasks:
-    - name: Add Negativo Steam repo
-      become: yes
-      yum_repository:
-        name: fedora-steam
-        description: Negativo17 Fedora Multimedia
-        enabled: yes
-        baseurl: https://negativo17.org/repos/steam/fedora-34/x86_64/
-        gpgkey: https://negativo17.org/repos/RPM-GPG-KEY-slaanesh
-
     - name: Install nvidia driver
       become: yes
+      when: enable_nvidia | bool
       package:
         name:
-          - nvidia-driver
-          - nvidia-settings
+          - akmod-nvidia
+          - xorg-x11-drv-nvidia
+          - xorg-x11-drv-nvidia-cuda
         state: present
 
-    - name: Install steam
-      become: yes
-      package:
-        name:
-          - steam
-          - kernel-modules-extra
-        state: present
 
     - name: Install misc utilities
       become: yes
       package:
         name:
-          - lutris
+          - kernel-modules-extra
           - gamemode
-          - mangohud
           - goverlay
+          - openrgb
         state: present
+
+    - name: Install misc utilities (flatpak)
+      community.general.flatpak:
+        state: present
+        method: system
+        name: "{{ item }}"
+      loop:
+        - com.obsproject.Studio
+        - com.obsproject.Studio.Plugin.Gstreamer
+        - com.obsproject.Studio.Plugin.OBSVkCapture 
+        - com.obsproject.Studio.Plugin.MoveTransition
+        - org.freedesktop.Platform.VulkanLayer.MangoHud
+        - org.freedesktop.Platform.VulkanLayer.vkBasalt//21.08
+        - org.freedesktop.Platform.VulkanLayer.OBSVkCapture
+        - com.usebottles.bottles
+
+    - name: Install Steam and friends
+      community.general.flatpak:
+        state: present
+        method: system
+        name: "{{ item }}"
+      loop:
+        - com.valvesoftware.Steam
+        - com.valvesoftware.Steam.CompatibilityTool.Proton
+        - com.valvesoftware.Steam.CompatibilityTool.Proton-Exp
+        - com.valvesoftware.Steam.CompatibilityTool.Proton-GE
+        - com.valvesoftware.Steam.CompatibilityTool.Boxtron
+        - com.valvesoftware.Steam.Utility.gamescope
+        - com.valvesoftware.Steam.Utility.steamtinkerlaunch
+        - com.github.Matoking.protontricks
+
+    - name: Enable MangoHUD & vkBasalt for Steam
+      become: yes
+      ansible.builtin.shell: "flatpak override --env=MANGOHUD=1 --env=ENABLE_VKBASALT=1 com.valvesoftware.Steam"
+
+    - name: Emulators and others
+      community.general.flatpak:
+        state: present
+        method: system
+        name: "{{ item }}"
+      loop:
+        - org.libretro.RetroArch
+        - org.yuzu_emu.yuzu
+        - net.pcsx2.PCSX2
+        - org.citra_emu.citra
+        - org.DolphinEmu.dolphin-emu
+        - com.etlegacy.ETLegacy
