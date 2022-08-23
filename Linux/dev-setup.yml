@@ -261,12 +261,19 @@
 
     # Flatpaks
         
-    - name: Add the flathub flatpak repository remote to the user installation
+    - name: Add the flathub flatpak repository remote to the installation
+      become: yes
       community.general.flatpak_remote:
         name: flathub
         state: present
-        flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
-        method: user
+        flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+        method: system
+        
+    - name: Remove any flathub filters
+      become: yes
+      ansible.builtin.command: "{{ item }}"
+      loop:
+      - flatpak --system remote-modify flathub --no-filter
 
     - name: Install flatpaks - basic
       community.general.flatpak:
@@ -292,17 +299,12 @@
         name: "{{ item }}"
       loop: "{{ pkgs.flatpak.fun }}" 
 
-    - name: Install flatpaks - utils
-      community.general.flatpak:
-        state: present
-        name: "{{ item }}"
-      loop: "{{ pkgs.flatpak.utils }}" 
-
     # Theme
 
     - name: Enable adw-gtk3 copr
+      become: yes
       community.general.copr:
-        state: present
+        state: enabled
         name: 'nickavem/adw-gtk3'
 
     - name: Install adw-gtk3 (flatpak)
@@ -314,9 +316,9 @@
       - org.gtk.Gtk3theme.adw-gtk3-dark
 
     - name: Install adw-gtk3 (native)
+      become: yes
       package:
         state: present
-        become: yes
         name: adw-gtk3
   
     - name: Set GTK theme
@@ -360,15 +362,17 @@
 
     # asdf
     - name: Download asdf
-    ansible.builtin.git:
-      repo: https://github.com/asdf-vm/asdf.git
-      dest: "{{ ansible_env.HOME }}/.asdf"
-      single_branch: yes
-      version: v0.10.2
+      ansible.builtin.git:
+        repo: https://github.com/asdf-vm/asdf.git
+        dest: "{{ ansible_env.HOME }}/.asdf"
+        single_branch: yes
+        version: v0.10.2
     
     - name: Add asdf plugins
-    ansible.builtin.shell: "asdf plugin add  {{ item.name }} {{ item.url }}"
-    loop:
-    - { name: nodejs, url: https://github.com/asdf-vm/asdf-nodejs.git }
-    - { name: ruby, url: https://github.com/asdf-vm/asdf-ruby.git }
-    - { name: rust, url: https://github.com/asdf-vm/asdf-rust.git }
+      ansible.builtin.shell: "asdf plugin add  {{ item.name }} {{ item.url }}"
+      loop:
+      - { name: nodejs, url: https://github.com/asdf-vm/asdf-nodejs.git }
+      - { name: ruby, url: https://github.com/asdf-vm/asdf-ruby.git }
+      - { name: rust, url: https://github.com/asdf-vm/asdf-rust.git }
+
+    
