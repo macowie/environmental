@@ -344,8 +344,16 @@
         single_branch: yes
         version: master
 
+    # Install packages
     - name: Stow the stows
-      ansible.builtin.shell: "stow --target {{ ansible_env.HOME }} --verbose=2 {{ ansible_env.HOME }}/dotfiles/{{ item }}"
+      ansible.builtin.shell:
+        argv:
+        - stow
+        - --verbose=2
+        - --dir={{ ansible_env.HOME }}/dotfiles
+        - --target {{ ansible_env.HOME }}
+        - --stow={{ item }}
+        creates: "{{ ansible_env.HOME }}/{{ item }}"
       register: result
       changed_when: 'result.stderr is search("LINK: ")'
       loop:
