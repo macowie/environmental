@@ -1,0 +1,46 @@
+- hosts: localhost
+  tasks:
+  - name: Add music automount
+    become: yes
+    ansible.builtin.copy:
+      dest: "/etc/systemd/system/mnt-Music.automount"
+      creates: "/etc/systemd/system/mnt-Music.automount"
+      content: |
+        [Unit]
+        Description=Automount music library (readonly)
+
+        [Automount]
+        Where=/mnt/Music
+
+        [Install]
+        WantedBy=multi-user.target
+
+  - name: Add music mount
+    become: yes
+    ansible.builtin.copy:
+      dest: "/etc/systemd/system/mnt-Music.mount"
+      creates: "/etc/systemd/system/mnt-Music.mount"
+      content: |
+        [Unit]
+        Description=Mount music library (readonly)
+
+        [Mount]
+        What=freenas.lan:/mnt/Milpool/Media/Music
+        Where=/mnt/Music
+        Type=nfs
+        TimeoutSec=20
+        Options=nofail,ro
+
+        [Install]
+        WantedBy=multi-user.target
+
+  - name: Reload services
+    become: yes
+    ansible.builtin.command: "systemctl daemon-reload"
+
+  - name: Enable Music automount
+    become: yes
+    ansible.builtin.systemd:
+      state: started
+      enabled: yes
+      name: mnt-Music.automount
