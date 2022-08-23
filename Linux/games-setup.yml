@@ -17,7 +17,7 @@
 - hosts: localhost
   vars_prompt:
     - name: enable_nvidia
-      prompt: Install nvidia driver (y/n)?
+      prompt: Install nvidia driver (yes/no)?
       private: no
   tasks:
     - name: Install nvidia driver

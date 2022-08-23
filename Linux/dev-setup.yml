@@ -22,6 +22,14 @@
 
 - hosts: localhost
   vars:
+    prefs:
+      dconf:
+      - { key: "/org/gnome/settings-daemon/plugins/color/night-light-enabled",       value: "true" }
+      - { key: "/org/gnome/settings-daemon/plugins/color/night-light-temperature",   value: "uint32 3700" }
+      - { key: "/org/gnome/settings-daemon/plugins/color/night-light-schedule-automatic", value: "false" }
+      - { key: "/org/gnome/settings-daemon/plugins/color/night-light-schedule-from", value: "23.0" }
+      - { key: "/org/gnome/settings-daemon/plugins/color/night-light-schedule-to",   value: "6.0" }
+      - { key: "/org/gnome/desktop/interface/color-scheme",                          value: "'prefer-dark'" }
     pkgs:
       rpm:
         base:
@@ -142,7 +150,6 @@
     releasever: "36"
 
   tasks:
-  
     - name: Enable RPMFusion
       become: yes
       ansible.builtin.dnf:
@@ -306,6 +313,12 @@
       community.general.copr:
         state: enabled
         name: 'nickavem/adw-gtk3'
+        
+    - name: Install adw-gtk3 (native)
+      become: yes
+      package:
+        state: present
+        name: adw-gtk3
 
     - name: Install adw-gtk3 (flatpak)
       community.general.flatpak:
@@ -314,26 +327,19 @@
       loop:
       - org.gtk.Gtk3theme.adw-gtk3 
       - org.gtk.Gtk3theme.adw-gtk3-dark
-
-    - name: Install adw-gtk3 (native)
-      become: yes
-      package:
-        state: present
-        name: adw-gtk3
   
-    - name: Set GTK theme
-      dconf: key="/org/gnome/desktop/interface/gtk-theme" value="'Adwaita'"
-
+    - name: Set GTK3 theme to adw-gtk3
+      dconf:
+        key: /org/gnome/desktop/interface/gtk-theme
+        value: adw-gtk3
+        
     # Prefs
 
-    - name: Enable Night Light
+    - name: Set desktop preferences
       dconf:
-        key: /org/gnome/settings-daemon/plugins/color/night-light-enabled
-        value: "true"
-    - name: Set Night Light Temperature
-      dconf:
-        key: /org/gnome/settings-daemon/plugins/color/night-light-temperature
-        value: uint32 5500
+        key: "{{ item.key }}"
+        value: "{{ item.value }}"
+      loop: "{{ prefs.dconf }}"
 
     # Dotfiles
 
@@ -344,8 +350,7 @@
         single_branch: yes
         version: master
 
-    # Install packages
-    - name: Stow the stows
+    - name: Stow the stows # WIP
       ansible.builtin.shell:
         argv:
         - stow
@@ -369,6 +374,7 @@
       - vim
 
     # asdf
+
     - name: Download asdf
       ansible.builtin.git:
         repo: https://github.com/asdf-vm/asdf.git
