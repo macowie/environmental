@@ -139,18 +139,31 @@
         - org.gnome.Tetravex 
         # - org.freedesktop.Piper
 
-    releasever: "{{ ansible_facts.distribution_major_version }}"
+    releasever: "36"
 
   tasks:
-    # Install packages
-
+  
     - name: Enable RPMFusion
+      become: yes
+      ansible.builtin.dnf:
+        disable_gpg_check: yes
+        name:
+        - "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ releasever }}.noarch.rpm"
+        - "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ releasever }}.noarch.rpm"
+
+    - name: Enable RPMFusion tainted
       become: yes
       package:
         name:
-        - https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ releasever }}.noarch.rpm
-        - https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ releasever }}.noarch.rpm
         - rpmfusion-free-release-tainted
+
+    - name: RPMFusion post-install steps
+      become: yes
+      ansible.builtin.shell: "{{ item }}"
+      loop:
+      - dnf groupupdate -y core
+      - dnf groupupdate -y multimedia --setop="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin
+      - dnf groupupdate -y sound-and-video
 
     - name: Install baseline desktop packages
       become: yes
