@@ -199,9 +199,12 @@
           - libpq-devel
           - pspg
         state: present
+        
     - name: Enable postgresql background service
       become: yes
-      ansible.builtin.command: "{{ item }}"
+      ansible.builtin.command:
+        cmd: "{{ item }}"
+        creates: /var/lib/pgsql/data
       loop:
         - sudo postgresql-setup --initdb
         - sudo systemctl enable --now postgresql
