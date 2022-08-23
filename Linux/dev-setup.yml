@@ -114,8 +114,8 @@
         multimedia:
         - com.github.wwmm.easyeffects
         - com.makemkv.MakeMKV
-        - org.videolan.VLC.Plugin.bdj
-        - org.videolan.VLC.Plugin.makemkv
+        - org.videolan.VLC.Plugin.bdj//3-21.08
+        - org.videolan.VLC.Plugin.makemkv//3-21.08
         - org.pitivi.Pitivi
         - org.bunkus.mkvtoolnix-gui
         - org.freac.freac
@@ -125,9 +125,9 @@
         - org.inkscape.Inkscape
         - org.darktable.Darktable    
         - org.gimp.GIMP
-        - org.gimp.GIMP.Plugin.Lensfun
-        - org.gimp.GIMP.Plugin.LiquidRescale 
-        - org.gimp.GIMP.Plugin.Resynthesizer 
+        - org.gimp.GIMP.Plugin.Lensfun//2-40
+        - org.gimp.GIMP.Plugin.LiquidRescale//2-40
+        - org.gimp.GIMP.Plugin.Resynthesizer//2-40 
 
         dev:
         - org.zealdocs.Zeal
