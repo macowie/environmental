@@ -1,0 +1,45 @@
+- hosts: localhost
+  tasks:
+    - name: Enable adw-gtk3 copr
+      become: yes
+      community.general.copr:
+        state: enabled
+        name: 'nickavem/adw-gtk3'
+        
+    - name: Install adw-gtk3 (native)
+      become: yes
+      package:
+        state: present
+        name: adw-gtk3
+
+    - name: Install adw-gtk3 (flatpak)
+      community.general.flatpak:
+        state: present
+        name: "{{ item }}"
+      loop:
+      - org.gtk.Gtk3theme.adw-gtk3 
+      - org.gtk.Gtk3theme.adw-gtk3-dark
+  
+    - name: Set GTK3 theme to adw-gtk3 (dark)
+      dconf:
+        key: "/org/gnome/desktop/interface/gtk-theme"
+        value: "'adw-gtk3-dark'"
+
+    - name: Get custom ADW color scheme
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/lassekongo83/adw-colors/main/themes/dracula/gtk.css
+        dest: "{{ ansible_env.HOME }}/.config/gtk-4.0/gtk.css" 
+        backup: yes
+
+    - name: Enable ADW Colors for GTK3
+      ansible.builtin.file: 
+        state: link
+        src: "{{ ansible_env.HOME }}/.config/gtk-4.0/gtk.css"
+        dest: "{{ ansible_env.HOME }}/.config/gtk-3.0/gtk.css"
+
+    - name: Enable ADW Colors for flatpak
+      become: yes
+      ansible.builtin.command: "{{ item }}"
+      loop:
+      - "flatpak --system override --filesystem=xdg-config/gtk-3.0"
+      - "flatpak --system override --filesystem=xdg-config/gtk-4.0"
