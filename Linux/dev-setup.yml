@@ -31,6 +31,8 @@
       - { key: "/org/gnome/desktop/interface/color-scheme",                          value: "'prefer-dark'" }
     pkgs:
       rpm:
+        remove_defaults:
+        - "*libreoffice*"
         base:
         - awscli
         - exa
@@ -94,6 +96,7 @@
         - com.github.maoschanz.drawing
         - com.belmoussaoui.Obfuscate
 
+        - org.libreoffice.LibreOffice
         - org.gnome.Dictionary
         - md.obsidian.Obsidian
         - org.gnome.GTG
@@ -266,6 +269,12 @@
       package:
         state: present
         name: 1password
+
+    - name: Remove unused default packages
+      become: yes
+      package:
+        state: absent
+        name: "{{ pkg.rpm.remove_defaults }}"
 
     # Flatpaks
         
