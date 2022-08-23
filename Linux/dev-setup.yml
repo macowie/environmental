@@ -185,7 +185,9 @@
 
     - name: Install heroku-cli
       become: yes
-      ansible.builtin.shell: curl https://cli-assets.heroku.com/install.sh | sh
+      ansible.builtin.shell:
+         cmd: curl https://cli-assets.heroku.com/install.sh | sh
+         creates: /usr/local/bin/heroku
 
     - name: Install Postgresql + tools
       become: yes
