@@ -3,7 +3,6 @@
 
 # Prereqs:
 # ansible-galaxy collection install community.general
-# pip install psutil
 
 # Usage:
 # ansible-playbook dev-setup.yml -K
@@ -22,7 +21,6 @@
 
 
 - hosts: localhost
-
   vars:
     pkgs:
       rpm:
@@ -49,6 +47,7 @@
         - jxl-pixbuf-loader
         - libdvdcss
         - mozilla-openh264
+        - python3-psutil
 
         dev:
         - '@Development tools'
