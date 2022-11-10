@@ -1,0 +1,126 @@
+
+# ansible-galaxy collection install community.general
+
+- name: "Mac setup"
+  hosts: localhost
+  vars:
+    prefs:
+    brews:
+      - act
+      - aom
+      - asdf
+      - awscli
+      - bat
+      - brotli
+      - ca-certificates
+      - cgif
+      - circleci
+      - coreutils
+      - docbook
+      - docbook-xsl
+      - exa
+      - fftw
+      - ffmpeg
+      - fzf
+      - gcc
+      - graphviz
+      - htop
+      - imagemagick
+      - jpeg-turbo
+      - jpeg-xl
+      - libaec
+      - libavif
+      - libde265
+      - libgsf
+      - libheif
+      - libidn
+      - liblqr
+      - libpng
+      - libraw
+      - librsvg
+      - libspng
+      - libssh2
+      - libtiff
+      - libtool
+      - libuv
+      - libxml2
+      - libyaml
+      - libzip
+      - luajit
+      - m4
+      - mozjpeg
+      - mpfr
+      - msgpack
+      - ncurses
+      - neovim
+      - netpbm
+      - openjpeg
+      - openssl@1.1
+      - pango
+      - pixman
+      - pkg-config
+      - poppler
+      - postgresql@14
+      - psutils
+      - python@3.10
+      - readline
+      - redis
+      - ripgrep
+      - rust
+      - shared-mime-info
+      - six
+      - sqlite
+      - tldr
+      - tmux
+      - tree-sitter
+      - uchardet
+      - unibilium
+      - unixodbc
+      - utf8proc
+      - vips
+      - webp
+      - x265
+      - xmlto
+      - xorgproto
+      - xz
+      - zoxide
+      - zstd
+
+      - homebrew/cask/chromedriver
+      - homebrew/cask/chrysalis
+      - homebrew/cask/clementine
+      - homebrew/cask/discord
+      - homebrew/cask/docker
+      - homebrew/cask/firefox
+      - homebrew/cask/github
+      - homebrew/cask/google-cloud-sdk
+      - homebrew/cask/keepingyouawake
+      - homebrew/cask/miro
+      - homebrew/cask/mouse-fix
+      - homebrew/cask/nextcloud
+      - homebrew/cask/obsidian
+      - homebrew/cask/session-manager-plugin
+      - homebrew/cask/spotify
+      - homebrew/cask/sublime-merge
+      - homebrew/cask/sublime-text
+      - homebrew/cask/transmit
+      - homebrew/cask/visual-studio-code
+      - homebrew/cask/zoom
+
+  tasks:
+    - name: Install homebrew
+      ansible.builtin.shell: '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
+      changed_when: false
+      become: true
+    - name: Install homebrew packages
+      community.general.homebrew:
+        state: latest
+        update_homebrew: true
+        name: "{{ brews }}"
+    - name: Add asdf plugins
+      ansible.builtin.command: "asdf plugin add  {{ item.name }} {{ item.url }}"
+      changed_when: false
+      loop:
+        - { name: nodejs, url: https://github.com/asdf-vm/asdf-nodejs.git }
+        - { name: ruby, url: https://github.com/asdf-vm/asdf-ruby.git }
+        - { name: rust, url: https://github.com/asdf-vm/asdf-rust.git }
