@@ -1,0 +1,15 @@
+- hosts: localhost
+  tasks:
+    - name: Antialiasing
+      dconf:
+        key: "/org/gnome/settings-daemon/plugins/xsettings/antialiasing"
+        value:  "'grayscale'" # 'rgba' for subpixel, 'grayscale' for default
+
+    - name: Get Hack font with nerd patches
+      ansible.builtin.get_url:
+        url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.1/Hack.zip
+        dest: "{{ ansible_env.HOME }}/.local/share/fonts" 
+        backup: no
+    - name: Refresh font cache
+      ansible.builtin.command: "fc-cache -f -v"
+
