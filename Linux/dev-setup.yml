@@ -37,6 +37,7 @@
         - awscli
         - exa
         - fish
+        - fd
         - fzf
         - jq
         - pandoc
@@ -44,21 +45,42 @@
         - rclone
         - stow
         - curl
-        - xclip
+        - wget
+        - neovim
+
+        - corectrl
+        - openrgb
+        - i2c-tools
+        - lm_sensors
+
+        - wl-clipboard
         - gnome-tweaks
         - gthumb
+        - whipper
+        - tldr
         - yt-dlp
         - yt-dlp-fish-completion
-
-        - ffmpeg
-        - gstreamer1-plugin-openh264
-        - gstreamer1-libav
+        - nextcloud-client
+     
+        - nextcloud-client-nautilus
+        - libheif
         - webp-pixbuf-loader
         - avif-pixbuf-loader
         - jxl-pixbuf-loader
+        - gnome-epub-thumbnailer
+        - ffmpegthumbnailer
+        - raw-thumbnailer
+        - seahorse-nautilus
+        - python3-pip
+
+        - gstreamer1-plugin-openh264
+        - gstreamer1-libav1
+        - poppler
+        - ffmpeg
         - libdvdcss
         - mozilla-openh264
         - python3-psutil
+        - hfg-gmuend-openmoji-fonts-all
 
         dev:
         - '@Development tools'
@@ -69,7 +91,11 @@
         - libxml2-devel
         - libcurl
         - sqlite-devel
-
+        - openssl1.1
+        - kitty
+        - kitty-terminfo
+        - tmux
+          
         fun:
         - neofetch
         - fortune-mod
@@ -369,6 +395,7 @@
       ansible.builtin.shell: "asdf plugin add  {{ item.name }} {{ item.url }}"
       loop:
       - { name: nodejs, url: https://github.com/asdf-vm/asdf-nodejs.git }
+      - { name: deno, url: https://github.com/asdf-vm/asdf-deno.git }
       - { name: ruby, url: https://github.com/asdf-vm/asdf-ruby.git }
       - { name: rust, url: https://github.com/asdf-vm/asdf-rust.git }
 
