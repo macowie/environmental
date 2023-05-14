@@ -37,7 +37,7 @@
         - awscli
         - exa
         - fish
-        - fd
+        - fd-find
         - fzf
         - jq
         - pandoc
@@ -74,7 +74,8 @@
         - python3-pip
 
         - gstreamer1-plugin-openh264
-        - gstreamer1-libav1
+        - gstreamer1-libav
+        - libavdevice
         - poppler
         - ffmpeg
         - libdvdcss
@@ -177,7 +178,7 @@
         - org.gnome.Tetravex 
         # - org.freedesktop.Piper
 
-    releasever: "36"
+    releasever: "38"
 
   tasks:
     - name: Enable RPMFusion
@@ -300,7 +301,7 @@
       become: yes
       package:
         state: absent
-        name: "{{ pkg.rpm.remove_defaults }}"
+        name: "{{ pkgs.rpm.remove_defaults }}"
 
     # Flatpaks
         
@@ -389,10 +390,13 @@
         repo: https://github.com/asdf-vm/asdf.git
         dest: "{{ ansible_env.HOME }}/.asdf"
         single_branch: yes
-        version: v0.10.2
+        version: v0.11.3
+    
+    - name: Update asdf
+      ansible.builtin.shell: "asdf update"
     
     - name: Add asdf plugins
-      ansible.builtin.shell: "asdf plugin add  {{ item.name }} {{ item.url }}"
+      ansible.builtin.shell: "asdf plugin-add  {{ item.name }} {{ item.url }}; true"
       loop:
       - { name: nodejs, url: https://github.com/asdf-vm/asdf-nodejs.git }
       - { name: deno, url: https://github.com/asdf-vm/asdf-deno.git }
@@ -400,3 +404,5 @@
       - { name: rust, url: https://github.com/asdf-vm/asdf-rust.git }
 
     
+    - name: Update asdf plugins
+      ansible.builtin.shell: "asdf plugin-update --all"
